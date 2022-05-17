@@ -1,0 +1,14 @@
+variant: fcos
+version: 1.3.0
+
+storage:
+  files:
+    - path: /root/.ssh/authorized_keys
+      contents:
+        inline: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrO13CUFxoQ+DJQ6tDqKorbKqC0QGQWSmPEsYjLUKF0mbpk1LLiiEDhM1enEXJ7RXf0De5n6hnYeVgo1h2XiUmhfOOYhF23/GhLaFmMsu5heLH969IZpqh/17t/r//pONxt2mnkcCMmywptZ0PLXPjYfOIE8y87Q5gFw5APFmwvEUn0LxCK1odlDXWhedwLOtYjfFLNAowMaXDKvqZsPYow3EizDN64kIGwpIkBscqdZqi+vCBfFsr4tJg0jT2iVYu8tbf7sIK9y0on6/fQ1t9pAPCJbbSMBObns26ZLP2Ym0tXmgbCMHDEnWkjLUYr5XqOpc7f3SkYGb/JkNV5FmN"
+      mode: 0600
+      overwrite: true
+passwd:
+  users:
+    - name: root
+      password_hash: "$6$jpauobj3buLjxlqU$7jnItXHk9Zx0QdlGPsU7eoQn65udeybdj7bb6IXJWgn.mpLQwer52JCINlpqEg4sVbRqJ9V7J4HV1N/ZIJKwq1"
