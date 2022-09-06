@@ -76,6 +76,9 @@ Keep in mind that the IMG content should look like the following:
     - config.ign
 
 Automatic creation can be done using the provided script `./generate.sh` which will create an `ignition.img` that can afterwards be mounted.
+```bash
+./generate.sh -r <LICENSE_KEY> -e <SCC_EMAIL> -v <K3S_VERSION>
+```
 
 ## Booting SLE Micro
 Now that you have the RAW image and the IMG image at your disposal, you either flash those into physical disks or mount them as volume in your virtualization environment for SLE Micro to bootstrap automatically.

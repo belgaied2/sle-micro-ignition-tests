@@ -14,11 +14,11 @@ zypper -n install \
 # zypper -n up
 
 # K3S Prep: Needed because /usr/local (which is the standard location for K3S is not mounted by default for this stage of Combustion)
-mount /dev/vda3 -o subvol=@/usr/local /usr/local
-mount /dev/vda3 -o subvol=@/var /var
+mount /dev/disk/by-label/ROOT -o subvol=@/usr/local /usr/local
+mount /dev/disk/by-label/ROOT -o subvol=@/var /var
 
 # Install K3S
-curl -sfL https://get.k3s.io | sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=<K3S_VERSION> sh -
 
 umount /usr/local
 umount /var
