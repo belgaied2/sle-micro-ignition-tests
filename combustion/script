@@ -1,22 +1,24 @@
 #!/bin/bash
-# combution: network
+# combustion: network
 SUSEConnect -r <LICENSE_KEY>  -e <SCC_EMAIL>
+
 # Install extra packages
 zypper -n install \
-tar \
-conmon \
-curl 
+    tar \
+    conmon \
+    curl
 
 # Install updates
 ## BEWARE: Updating SLE Micro during combustion might result in a new kernel being loaded with some kernel extensions necessary for K3S
 ## If you DO need to upgrade SLE Micro during Combustion, you need a reboot directly after the first boot for the modules to load correctly and K3S to start correctly.
-#zypper -n up
+# zypper -n up
 
 # K3S Prep: Needed because /usr/local (which is the standard location for K3S is not mounted by default for this stage of Combustion)
-# So, instead, I recommend mounting /opt (which is also not mounted) and create a folder specific to K3s
-mount /opt
-mkdir /opt/k3s
+mount /dev/vda3 -o subvol=@/usr/local /usr/local
+mount /dev/vda3 -o subvol=@/var /var
 
 # Install K3S
-## Notice the INSTALL_K3S_BIN_DIR environment variable to tell K3s to install into our custom folder
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.12+k3s1 INSTALL_K3S_BIN_DIR=/opt/k3s sh -
+curl -sfL https://get.k3s.io | sh -
+
+umount /usr/local
+umount /var
