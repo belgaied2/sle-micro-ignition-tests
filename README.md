@@ -9,20 +9,23 @@ Since, by default, the RAW image does not setup users or even a root user, it ne
 This is done using configuration files available on a secondary disk (USB stick, secondary VM volume, etc.).
 
 There are two possibilities to configure a RAW SLE Micro installation:
-- Ignition
-- Combustion
+- [Ignition](https://documentation.suse.com/sle-micro/5.1/html/SLE-Micro-all/cha-images-ignition.html)
+- [Combustion](https://documentation.suse.com/sle-micro/5.1/html/SLE-Micro-all/cha-images-combustion.html)
 
-## Ignition
+### Ignition
 
 Ignition is basically a JSON file that is similar in function to "Cloudinit", it has a limited set of capabilites but can be used to bootstrap single things like users and storage configuration. However, it is not possible to install Packages during bootstrapping using Ignition. Additional Combustion configuration is needed for that.
 
 Since JSON is not easily "human-writable", it is recommended to create an ignition file first in YAML and then use a specific conversion tool called `butane` to transform YAML into JSON.
 More on the procedure [here](https://documentation.suse.com/sle-micro/5.0/single-html/SLE-Micro-installation/index.html#sec-slem-image-deployment).
 
-For an example ignition configuration in YAML, checkout [config.fcc](./ignition/config.fcc).
-For the resulting JSON file, checkout [config.ign](./ignition/config.ign)
+For an example ignition configuration in YAML, checkout [config.fcc](./ignition/config.fcc) and the resulting JSON file, checkout [config.ign](./ignition/config.ign).
+Transformation can be done using the following command:
+```bash
+$ butane -p ignition/config.fcc -o ignition/config.ign
+```
 
-## Combustion
+### Combustion
 
 Combustion is an additional way of bootstrapping SLE Micro, it can be used instead or in conjunction with ignition.
 Combustion works exactly like a bash script, with some markers as comments like `#combustion: network` which means all instructions coming after the comment will be executed after the network has been bootstrapped.
@@ -32,7 +35,8 @@ Things to know:
 - Combustion is executed after ignition, which means they will override settings if these were set in ignition
 - Combustion works in a stage where `transactional-update` is not needed. For example, if a package needs to be installed, don't use `transactional-update pkg install -y XYZ` but `zypper install -y XYZ`
 
-# Configure a disk with ignition and combustion
+## Configure a disk with ignition and combustion
+
 When bootstrapping a SLE Micro RAW image on a machine (physical or virtual), ignition and/or combustion files need to be present on a secondary disk. This disk can be a USB Stick for physical machines, and probably a volume for virtual machines.
 
 I find the easiest way to achieve both is to create an IMG file which can be either mounted to a virtualization tool as a volume or flashed into a USB key.
@@ -71,5 +75,10 @@ Keep in mind that the IMG content should look like the following:
     - config.fcc (not necessary, only for your reference)
     - config.ign
 
-# Booting SLE Micro
+Automatic creation can be done using the provided script `./generate.sh` which will create an `ignition.img` that can afterwards be mounted.
+```bash
+./generate.sh -r <LICENSE_KEY> -e <SCC_EMAIL> -v <K3S_VERSION>
+```
+
+## Booting SLE Micro
 Now that you have the RAW image and the IMG image at your disposal, you either flash those into physical disks or mount them as volume in your virtualization environment for SLE Micro to bootstrap automatically.
