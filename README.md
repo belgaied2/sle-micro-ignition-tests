@@ -78,6 +78,7 @@ Keep in mind that the IMG content should look like the following:
 Automatic creation can be done using the provided script `./generate.sh` which will create an `ignition.img` that can afterwards be mounted.
 ```bash
 ./generate.sh -r <LICENSE_KEY> -e <SCC_EMAIL> -v <K3S_VERSION>
+LICENSE_KEY=<LICENSE_KEY> SCC_EMAIL=<SCC_EMAIL> K3S_VERSION=<K3S_VERSION> ./generate.sh
 ```
 
 ## Booting SLE Micro
