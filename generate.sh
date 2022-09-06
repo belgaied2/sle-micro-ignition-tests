@@ -3,12 +3,13 @@
 IGNITION_RAW=ignition.img
 IGNITION_MOUNT="mnt"
 
-LICENSE_KEY=''
-SCC_EMAIL=''
-K3S_VERSION='latest'
+LICENSE_KEY=${LICENSE_KEY:-""}
+SCC_EMAIL=${SCC_EMAIL:-""}
+K3S_VERSION=${K3S_VERSION:-"latest"}
 
 print_usage() {
-  printf "Usage: ./generate.sh -r <LICENSE_KEY> -e <SCC_EMAIL> -v <K3S_VERSION>"
+  echo "Using args: ./generate.sh -r <LICENSE_KEY> -e <SCC_EMAIL> -v <K3S_VERSION>"
+  echo "Using ENV variables: LICENSE_KEY=<LICENSE_KEY> SCC_EMAIL=<SCC_EMAIL> K3S_VERSION=<K3S_VERSION> ./generate.sh"
 }
 
 while getopts 'r:e:v:' flag; do
